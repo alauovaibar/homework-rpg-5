@@ -24,6 +24,6 @@ public class BasicAttack implements AttackAction {
     @Override
     public String getEffectSummary() {
         // TODO: Decide how a plain attack should describe its effects.
-        return "TODO";
+        return "наносит " + baseDamage + " ед. физического урона";
     }
 }
