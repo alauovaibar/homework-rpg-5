@@ -15,15 +15,15 @@ public class DungeonFacade {
     }
 
     public AdventureResult runAdventure(HeroProfile hero, BossEnemy boss, AttackAction action) {
-        // TODO: Coordinate subsystem calls in a clean order.
-        // Suggested flow:
-        // 1) preparation
-        // 2) battle
-        // 3) reward
+        String prepDesc = preparationService.prepare(hero, boss, action);
         AdventureResult result = battleService.battle(hero, boss, action);
-        String preparationSummary = preparationService.prepare(hero, boss, action);
-        result.addLine(preparationSummary);
-        result.setReward(rewardService.determineReward(result));
+        result.addLine("Подготовка: " + prepDesc);
+        result.addLine("Эффекты атаки: " + action.getEffectSummary());
+        if (hero.isAlive()) {
+            result.setReward(rewardService.determineReward(result));
+        } else {
+            result.setReward("Посмертная слава");
+        }
         return result;
     }
 }
